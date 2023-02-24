@@ -9,8 +9,17 @@
 - Git
 
 ## To start
+Config your .env file
+```
+make env
+```
+Start the app
 ```
 make start
+```
+Finish setup
+```
+make setup
 ```
 
 ## To stop
