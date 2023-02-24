@@ -1,6 +1,9 @@
 start:
 	docker-compose up -d
 
+setup:
+	docker-compose exec php ./entrypoint.sh
+
 stop:
 	docker-compose down
 

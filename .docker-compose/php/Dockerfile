@@ -33,7 +33,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN mkdir /etc/supervisor.d
 COPY supervisord /etc/supervisor.d/supervisord.conf
 COPY schedule /home/admin/schedule.sh
-COPY entrypoint.sh /home/admin/entrypoint.sh
 COPY $PHP_INI_FILE /usr/local/etc/php/conf.d/laravel.ini
 
 WORKDIR /var/www/
@@ -54,15 +53,10 @@ WORKDIR /var/www
 RUN chown admin:admin /home/admin/schedule.sh && \
     chmod 744 /home/admin/schedule.sh
 
-RUN chown admin:admin /home/admin/entrypoint.sh && \
-    chmod 744 /home/admin/entrypoint.sh
-
 RUN chown -R admin:admin /var/www
 
 ENV HOME /home/admin
 
 USER admin
-
-CMD ["/home/admin/entrypoint.sh"]
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor.d/supervisord.conf"]
