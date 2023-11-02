@@ -11,8 +11,6 @@ services:
       - ./:/var/www/
       - ./.docker-compose/nginx/conf.d:/etc/nginx/conf.d/
       - ./.docker-compose/nginx/log:/var/log/nginx/
-    networks:
-      - base
     links:
       - php
 
@@ -28,31 +26,8 @@ services:
     restart: unless-stopped
     volumes:
       - ./:/var/www/
-    networks:
-      - base
-    depends_on:
-      - postgres
-
-  postgres:
-    container_name: pg-${PROJECT_SLUG}
-    build:
-      context: ./.docker-compose/postgres
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_USER=${DB_USERNAME}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_DB=${DB_DATABASE}
-    ports:
-      - "${DB_PORT_EXT}:5432"
-    networks:
-      - base
-
-volumes:
-  pgdata:
 
 networks:
-  base:
-    driver: bridge
+  default:
+    external:
+      name: ${NETWORK}
